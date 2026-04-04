@@ -1981,24 +1981,43 @@
 
                     <!-- Revenue share model -->
                     <div style="background:var(--white);border-radius:16px;padding:28px;border:1px solid var(--gray-200);">
-                        <h3 style="font-size:16px;font-weight:700;margin-bottom:16px;">Revenue Share Model</h3>
+                        <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;">Three-Way Revenue Share</h3>
+                        <p style="font-size:12px;color:var(--gray-400);margin-bottom:16px;">Mesiniaga &amp; SuperCFO jointly pitch to Bursa Malaysia</p>
                         <div style="display:flex;flex-direction:column;gap:10px;">
                             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--gray-50);border-radius:10px;">
                                 <div>
-                                    <div style="font-size:13px;font-weight:600;">Bursa Malaysia Share</div>
-                                    <div style="font-size:11px;color:var(--gray-400);">Platform distribution &amp; branding</div>
+                                    <div style="font-size:13px;font-weight:600;">Bursa Malaysia</div>
+                                    <div style="font-size:11px;color:var(--gray-400);">Platform, distribution &amp; investor base</div>
                                 </div>
                                 <div style="font-size:18px;font-weight:800;color:var(--coral);" id="bursaShare">RM 300K/yr</div>
                             </div>
                             <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--gray-50);border-radius:10px;">
                                 <div>
-                                    <div style="font-size:13px;font-weight:600;">SuperCFO Share</div>
-                                    <div style="font-size:11px;color:var(--gray-400);">AI generation &amp; infrastructure</div>
+                                    <div style="font-size:13px;font-weight:600;">Mesiniaga</div>
+                                    <div style="font-size:11px;color:var(--gray-400);">Enterprise sales, integration &amp; support</div>
                                 </div>
-                                <div style="font-size:18px;font-weight:800;color:var(--accent-blue);" id="scfoShare">RM 700K/yr</div>
+                                <div style="font-size:18px;font-weight:800;color:var(--accent-purple);" id="mesiShare">RM 200K/yr</div>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--gray-50);border-radius:10px;">
+                                <div>
+                                    <div style="font-size:13px;font-weight:600;">SuperCFO</div>
+                                    <div style="font-size:11px;color:var(--gray-400);">AI engine, report generation &amp; infrastructure</div>
+                                </div>
+                                <div style="font-size:18px;font-weight:800;color:var(--accent-blue);" id="scfoShare">RM 500K/yr</div>
                             </div>
                         </div>
-                        <p style="font-size:11px;color:var(--gray-400);margin-top:12px;line-height:1.5;">Illustrative 70/30 split. Actual terms subject to partnership agreement. Bursa earns incremental revenue with zero development cost.</p>
+                        <!-- Visual bar -->
+                        <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;margin-top:16px;gap:2px;">
+                            <div id="bursaBar" style="width:30%;background:var(--coral);border-radius:4px;"></div>
+                            <div id="mesiBar" style="width:20%;background:var(--accent-purple);border-radius:4px;"></div>
+                            <div id="scfoBar" style="width:50%;background:var(--accent-blue);border-radius:4px;"></div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--gray-400);">
+                            <span>Bursa 30%</span>
+                            <span>Mesiniaga 20%</span>
+                            <span>SuperCFO 50%</span>
+                        </div>
+                        <p style="font-size:11px;color:var(--gray-400);margin-top:12px;line-height:1.5;">Illustrative 30/20/50 split. Mesiniaga &amp; SuperCFO jointly develop and pitch the solution; Bursa earns incremental revenue with zero development cost.</p>
                     </div>
 
                     <!-- Flywheel -->
@@ -2138,7 +2157,8 @@
             const annual = reports * price;
             const monthly = annual / 12;
             const bursaCut = annual * 0.3;
-            const scfoCut = annual * 0.7;
+            const mesiCut = annual * 0.2;
+            const scfoCut = annual * 0.5;
 
             document.getElementById('bursaReportsVal').textContent = reports.toLocaleString();
             document.getElementById('bursaPriceVal').textContent = 'RM ' + price;
@@ -2146,6 +2166,7 @@
             document.getElementById('bursaMonthlyRev').textContent = fmtRM(monthly);
             document.getElementById('bursaPerReport').textContent = 'RM ' + price;
             document.getElementById('bursaShare').textContent = fmtRM(bursaCut) + '/yr';
+            document.getElementById('mesiShare').textContent = fmtRM(mesiCut) + '/yr';
             document.getElementById('scfoShare').textContent = fmtRM(scfoCut) + '/yr';
         }
 
