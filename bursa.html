@@ -871,83 +871,132 @@
             .team-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        /* Showcase gallery */
-        .showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-top: 48px;
-        }
-
-        .showcase-card {
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--gray-200);
-            background: var(--white);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .showcase-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 50px rgba(15,23,42,0.12);
-        }
-
-        .showcase-card.wide {
-            grid-column: span 2;
-        }
-
-        .showcase-img-wrap {
+        /* Showcase Carousel */
+        .carousel-wrapper {
             position: relative;
+            margin-top: 48px;
             overflow: hidden;
-            aspect-ratio: 16/10;
+            border-radius: 20px;
         }
 
-        .showcase-img-wrap img {
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .carousel-slide img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top left;
             display: block;
-            transition: transform 0.4s;
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(15,23,42,0.10);
         }
 
-        .showcase-card:hover .showcase-img-wrap img {
-            transform: scale(1.03);
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 32px 36px;
+            background: linear-gradient(0deg, rgba(15,23,42,0.88) 0%, rgba(15,23,42,0.55) 60%, transparent 100%);
+            border-radius: 0 0 20px 20px;
+            color: var(--white);
         }
 
-        .showcase-caption {
-            padding: 20px 24px;
-        }
-
-        .showcase-caption h4 {
-            font-size: 15px;
+        .carousel-caption h4 {
+            font-size: 20px;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
-        .showcase-caption p {
-            font-size: 13px;
-            color: var(--gray-500);
-            line-height: 1.5;
+        .carousel-caption p {
+            font-size: 14px;
+            color: var(--gray-300);
+            line-height: 1.6;
+            max-width: 700px;
         }
 
-        .showcase-tag {
+        .carousel-tag {
             display: inline-block;
             font-size: 11px;
-            font-weight: 600;
-            padding: 3px 10px;
+            font-weight: 700;
+            padding: 4px 14px;
             border-radius: 50px;
-            margin-top: 8px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Arrow buttons */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.92);
+            border: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 3;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+        }
+
+        .carousel-btn:hover {
+            background: var(--white);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+            transform: translateY(-50%) scale(1.06);
+        }
+
+        .carousel-btn svg {
+            width: 20px;
+            height: 20px;
+            color: var(--navy-dark);
+        }
+
+        .carousel-btn-prev { left: 16px; }
+        .carousel-btn-next { right: 16px; }
+
+        /* Dots */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0;
+        }
+
+        .carousel-dot.active {
+            background: var(--coral);
+            width: 32px;
+            border-radius: 5px;
         }
 
         @media (max-width: 768px) {
-            .showcase-grid { grid-template-columns: 1fr; }
-            .showcase-card.wide { grid-column: span 1; }
-        }
-
-        @media (max-width: 1024px) and (min-width: 769px) {
-            .showcase-grid { grid-template-columns: repeat(2, 1fr); }
-            .showcase-card.wide { grid-column: span 2; }
+            .carousel-btn { width: 36px; height: 36px; }
+            .carousel-btn-prev { left: 8px; }
+            .carousel-btn-next { right: 8px; }
+            .carousel-caption { padding: 20px; }
+            .carousel-caption h4 { font-size: 16px; }
+            .carousel-caption p { font-size: 12px; }
         }
 
         /* Score gauge */
@@ -1195,66 +1244,71 @@
             <h2 class="section-title fade-in">SuperCFO is <span style="color:var(--coral);">Already Live</span></h2>
             <p class="section-subtitle fade-in">SuperCFO is a production-ready platform already generating financial analysis, dashboards, compliance reports, and more. Here's what investors on Bursa Malaysia would experience.</p>
 
-            <div class="showcase-grid">
-                <!-- Card 1: Home / Command Center (wide) -->
-                <div class="showcase-card wide fade-in">
-                    <div class="showcase-img-wrap">
+            <div class="carousel-wrapper fade-in">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- Slide 1 -->
+                    <div class="carousel-slide">
                         <img src="screenshots/home.png" alt="SuperCFO Home - AI-powered financial command center">
+                        <div class="carousel-caption">
+                            <h4>AI-Powered Financial Command Center</h4>
+                            <p>One platform covering Finance Ops, Finance Analysis, Risk Assessment, and 63+ dashboard templates. Investors choose the analysis they need and get results in minutes.</p>
+                            <span class="carousel-tag" style="background:rgba(99,102,241,0.25);color:#c7d2fe;">Platform Overview</span>
+                        </div>
                     </div>
-                    <div class="showcase-caption">
-                        <h4>AI-Powered Financial Command Center</h4>
-                        <p>One platform covering Finance Ops, Finance Analysis, Risk Assessment, and 63+ dashboard templates. Investors choose the analysis they need and get results in minutes.</p>
-                        <span class="showcase-tag" style="background:rgba(99,102,241,0.1);color:var(--blue);">Platform Overview</span>
+                    <!-- Slide 2 -->
+                    <div class="carousel-slide">
+                        <img src="screenshots/pnl-dashboard.png" alt="P&amp;L Waterfall and Operating Expense Breakdown">
+                        <div class="carousel-caption">
+                            <h4>P&amp;L Waterfall &amp; Expense Analysis</h4>
+                            <p>Interactive waterfall charts and expense breakdowns help investors instantly visualise how revenue flows to profit.</p>
+                            <span class="carousel-tag" style="background:rgba(16,185,129,0.25);color:#a7f3d0;">Financial Analysis</span>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Card 2: P&L Dashboard -->
-                <div class="showcase-card fade-in">
-                    <div class="showcase-img-wrap">
-                        <img src="screenshots/pnl-dashboard.png" alt="P&L Waterfall and Operating Expense Breakdown">
-                    </div>
-                    <div class="showcase-caption">
-                        <h4>P&amp;L Waterfall &amp; Expense Analysis</h4>
-                        <p>Interactive waterfall charts and expense breakdowns help investors instantly visualise how revenue flows to profit.</p>
-                        <span class="showcase-tag" style="background:rgba(16,185,129,0.1);color:var(--accent-green);">Financial Analysis</span>
-                    </div>
-                </div>
-
-                <!-- Card 3: Sales Trend Dashboard -->
-                <div class="showcase-card fade-in">
-                    <div class="showcase-img-wrap">
+                    <!-- Slide 3 -->
+                    <div class="carousel-slide">
                         <img src="screenshots/sales-dashboard.png" alt="Sales Trend and Seasonality Dashboard with KPI cards">
+                        <div class="carousel-caption">
+                            <h4>KPI Scorecards &amp; Trend Analysis</h4>
+                            <p>Revenue, margins, transaction trends, and AI-generated key insights &mdash; all in one interactive dashboard.</p>
+                            <span class="carousel-tag" style="background:rgba(249,112,102,0.25);color:#fecaca;">Dashboard</span>
+                        </div>
                     </div>
-                    <div class="showcase-caption">
-                        <h4>KPI Scorecards &amp; Trend Analysis</h4>
-                        <p>Revenue, margins, transaction trends, and AI-generated key insights &mdash; all in one interactive dashboard.</p>
-                        <span class="showcase-tag" style="background:rgba(249,112,102,0.1);color:var(--coral);">Dashboard</span>
-                    </div>
-                </div>
-
-                <!-- Card 4: Data Transform / Financial Model -->
-                <div class="showcase-card fade-in">
-                    <div class="showcase-img-wrap">
+                    <!-- Slide 4 -->
+                    <div class="carousel-slide">
                         <img src="screenshots/financial-model.png" alt="Financial modelling with scenario analysis and forecast assumptions">
+                        <div class="carousel-caption">
+                            <h4>Scenario Analysis &amp; Forecasting</h4>
+                            <p>Base, optimistic, and pessimistic projections with transparent assumptions investors can review and understand.</p>
+                            <span class="carousel-tag" style="background:rgba(168,85,247,0.25);color:#e9d5ff;">Financial Model</span>
+                        </div>
                     </div>
-                    <div class="showcase-caption">
-                        <h4>Scenario Analysis &amp; Forecasting</h4>
-                        <p>Base, optimistic, and pessimistic projections with transparent assumptions investors can review and understand.</p>
-                        <span class="showcase-tag" style="background:rgba(168,85,247,0.1);color:var(--purple);">Financial Model</span>
+                    <!-- Slide 5 -->
+                    <div class="carousel-slide">
+                        <img src="screenshots/sustainability-report.png" alt="IFRS S1/S2 Sustainability Report Assessment for Genting Malaysia">
+                        <div class="carousel-caption">
+                            <h4>Sustainability &amp; Compliance Assessment</h4>
+                            <p>AI-powered IFRS S1/S2 compliance reviews of sustainability reports for Bursa-listed companies. Investors can assess ESG risks and governance quality before investing.</p>
+                            <span class="carousel-tag" style="background:rgba(245,158,11,0.25);color:#fde68a;">ESG &amp; Governance</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Card 5: Sustainability / IFRS Assessment (wide) -->
-                <div class="showcase-card wide fade-in">
-                    <div class="showcase-img-wrap">
-                        <img src="screenshots/sustainability-report.png" alt="IFRS S1/S2 Sustainability Report Assessment for Genting Malaysia">
-                    </div>
-                    <div class="showcase-caption">
-                        <h4>Sustainability &amp; Compliance Assessment</h4>
-                        <p>AI-powered IFRS S1/S2 compliance reviews of sustainability reports for Bursa-listed companies. Investors can assess ESG risks and governance quality before investing.</p>
-                        <span class="showcase-tag" style="background:rgba(245,158,11,0.1);color:var(--accent-amber);">ESG &amp; Governance</span>
-                    </div>
-                </div>
+                <!-- Nav arrows -->
+                <button class="carousel-btn carousel-btn-prev" onclick="moveCarousel(-1)" aria-label="Previous slide">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <button class="carousel-btn carousel-btn-next" onclick="moveCarousel(1)" aria-label="Next slide">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+
+            <!-- Dots -->
+            <div class="carousel-dots" id="carouselDots">
+                <button class="carousel-dot active" onclick="goToSlide(0)"></button>
+                <button class="carousel-dot" onclick="goToSlide(1)"></button>
+                <button class="carousel-dot" onclick="goToSlide(2)"></button>
+                <button class="carousel-dot" onclick="goToSlide(3)"></button>
+                <button class="carousel-dot" onclick="goToSlide(4)"></button>
             </div>
         </div>
     </section>
@@ -1633,6 +1687,49 @@
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Carousel
+        let currentSlide = 0;
+        const totalSlides = 5;
+        const track = document.getElementById('carouselTrack');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let autoPlayTimer;
+
+        function updateCarousel() {
+            track.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+            dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+        }
+
+        function moveCarousel(dir) {
+            currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+            updateCarousel();
+            resetAutoPlay();
+        }
+
+        function goToSlide(i) {
+            currentSlide = i;
+            updateCarousel();
+            resetAutoPlay();
+        }
+
+        function resetAutoPlay() {
+            clearInterval(autoPlayTimer);
+            autoPlayTimer = setInterval(function() { moveCarousel(1); }, 5000);
+        }
+
+        // Auto-advance every 5 seconds
+        resetAutoPlay();
+
+        // Swipe support for mobile
+        (function() {
+            let startX = 0;
+            const el = document.querySelector('.carousel-wrapper');
+            el.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+            el.addEventListener('touchend', function(e) {
+                const diff = startX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) moveCarousel(diff > 0 ? 1 : -1);
+            }, { passive: true });
+        })();
 
         // Bursa Revenue Simulator
         function fmtRM(v) {
