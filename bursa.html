@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperCFO for Bursa Malaysia | AI-Powered Investor Education &amp; Stock Analysis</title>
+    <meta name="description" content="Mesiniaga and SuperCFO partner with Bursa Malaysia to empower investors with AI-driven financial analysis, company health reports, investability scoring, and governance insights for Bursa-listed stocks.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23f97066'/><text x='16' y='22' text-anchor='middle' fill='white' font-family='Inter,sans-serif' font-weight='800' font-size='18'>S</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1e293b;
+            --navy-dark: #0f172a;
+            --navy-light: #334155;
+            --white: #FFFFFF;
+            --peach-bg: #fff5f0;
+            --peach-light: #fff8f5;
+            --peach-grid: #fde8de;
+            --coral: #f97066;
+            --coral-light: #fca5a1;
+            --green-label: #10b981;
+            --green-light: #d1fae5;
+            --purple: #a855f7;
+            --purple-light: #f3e8ff;
+            --blue: #6366f1;
+            --blue-light: #e0e7ff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --accent-green: #10b981;
+            --accent-purple: #a855f7;
+            --accent-blue: #6366f1;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f97066;
+            --bursa-gold: #d4a843;
+            --bursa-dark: #1a2332;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+            color: var(--navy-dark);
+            background: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 72px;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--coral), var(--purple));
+            z-index: 101;
+            transition: width 0.1s;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--navy-dark);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            font-style: italic;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--coral), #e84393);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--navy-dark); }
+
+        .nav-cta {
+            background: var(--navy-dark);
+            color: var(--white) !important;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .nav-cta:hover { background: var(--navy); transform: translateY(-1px); }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu-btn svg { width: 24px; height: 24px; }
+
+        /* Sections */
+        .section { padding: 100px 24px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .section-dark {
+            background: var(--navy-dark);
+            color: var(--white);
+        }
+
+        .section-peach {
+            background: var(--peach-bg);
+            position: relative;
+        }
+
+        .section-gray { background: var(--gray-50); }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--green-label);
+            margin-bottom: 16px;
+        }
+
+        .section-dark .section-label { color: var(--accent-green); }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        .section-title .highlight { color: var(--coral); }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray-500);
+            max-width: 640px;
+            line-height: 1.7;
+        }
+
+        .section-dark .section-subtitle { color: var(--gray-400); }
+
+        .highlight-coral { color: var(--coral); }
+
+        /* ========== HERO ========== */
+        .hero {
+            padding-top: 72px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            background: var(--peach-light);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(253,186,164,0.18) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(253,186,164,0.18) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(ellipse, rgba(249,112,102,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 48px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--green-label);
+            margin-bottom: 24px;
+        }
+
+        .hero-label svg { width: 20px; height: 20px; }
+
+        .hero-title {
+            font-size: clamp(40px, 5.5vw, 64px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            color: var(--navy-dark);
+            margin-bottom: 24px;
+        }
+
+        .hero-title .coral { color: var(--coral); }
+
+        .hero-desc {
+            font-size: 18px;
+            color: var(--gray-500);
+            line-height: 1.7;
+            max-width: 520px;
+            margin-bottom: 36px;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--navy-dark);
+            color: var(--white);
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(15,23,42,0.3); }
+
+        .hero-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .hero-tag {
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            background: var(--white);
+            color: var(--gray-600);
+            border: 1px solid var(--gray-200);
+        }
+
+        /* Hero Dashboard Mockup */
+        .hero-right { position: relative; }
+
+        .dashboard-mockup {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 24px 60px rgba(15,23,42,0.12), 0 2px 8px rgba(15,23,42,0.06);
+            padding: 20px;
+            position: relative;
+        }
+
+        .mockup-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: var(--gray-50);
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+
+        .mockup-bar-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--gray-300);
+        }
+
+        .mockup-bar svg { width: 14px; height: 14px; color: var(--gray-400); }
+
+        .mockup-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .metric-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--gray-100);
+        }
+
+        .metric-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-400);
+            margin-bottom: 6px;
+        }
+
+        .metric-label .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--navy-dark);
+        }
+
+        .metric-change {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-green);
+            margin-top: 2px;
+        }
+
+        .mockup-bottom {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 12px;
+        }
+
+        .mockup-chart-area {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--gray-100);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .chart-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-500);
+        }
+
+        .chart-tabs { display: flex; gap: 4px; }
+
+        .chart-tab {
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-400);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .chart-tab.active { background: var(--blue); color: white; }
+
+        .chart-svg-area { height: 100px; }
+
+        .mockup-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-card {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 14px;
+            border: 1px solid var(--gray-100);
+        }
+
+        .sidebar-card-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-500);
+            margin-bottom: 10px;
+        }
+
+        .market-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 3px 0;
+            font-size: 12px;
+        }
+
+        .market-row .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .market-row span:last-child {
+            font-weight: 700;
+            color: var(--navy-dark);
+        }
+
+        .insight-row {
+            display: flex;
+            align-items: start;
+            gap: 6px;
+            padding: 4px 0;
+            font-size: 11px;
+            color: var(--gray-500);
+            line-height: 1.4;
+        }
+
+        .insight-row .bullet {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--purple);
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .growth-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--white);
+            border-radius: 14px;
+            padding: 12px 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 2;
+        }
+
+        .growth-badge-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-400);
+        }
+
+        .growth-badge-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-green);
+        }
+
+        .ai-pill {
+            position: absolute;
+            bottom: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--white);
+            border-radius: 50px;
+            padding: 10px 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--navy-dark);
+            z-index: 2;
+            white-space: nowrap;
+        }
+
+        .ai-pill-icon {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e879f9, #a855f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Hero stats bar */
+        .hero-stats-bar {
+            background: var(--white);
+            border-top: 1px solid var(--gray-200);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-stats-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .hero-stat { text-align: center; }
+
+        .hero-stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--navy-dark);
+        }
+
+        .hero-stat-label {
+            font-size: 13px;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        /* Grids */
+        .usp-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .usp-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px 28px;
+            border: 1px solid var(--gray-200);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .usp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(15,23,42,0.08); }
+
+        .usp-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .usp-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .usp-card p {
+            font-size: 14px;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .capability-card {
+            background: var(--gray-50);
+            border-radius: 14px;
+            padding: 28px;
+            border: 1px solid var(--gray-100);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .capability-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(15,23,42,0.06); }
+
+        .capability-icon {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 14px;
+        }
+
+        .capability-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .capability-card p {
+            font-size: 13px;
+            color: var(--gray-500);
+            line-height: 1.5;
+        }
+
+        /* Partners Grid */
+        .partners-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 48px;
+        }
+
+        .partner-card {
+            display: flex;
+            align-items: start;
+            gap: 20px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 28px;
+            transition: transform 0.2s;
+        }
+
+        .partner-card:hover { transform: translateY(-3px); }
+
+        .partner-icon {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .partner-info h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .partner-info p {
+            font-size: 13px;
+            color: var(--gray-400);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .partner-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 50px;
+            background: rgba(249,112,102,0.15);
+            color: var(--coral-light);
+        }
+
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 48px;
+        }
+
+        .team-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px 28px;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+            transition: transform 0.2s;
+        }
+
+        .team-card:hover { transform: translateY(-4px); }
+
+        .team-avatar {
+            width: 96px; height: 96px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 16px;
+            border: 3px solid var(--gray-100);
+        }
+
+        .team-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .team-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+
+        .team-role {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--coral);
+            margin-bottom: 12px;
+        }
+
+        .team-bio {
+            font-size: 13px;
+            color: var(--gray-500);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .team-linkedin {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        /* Sim slider */
+        .sim-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.12);
+            outline: none;
+        }
+        .sim-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px; height: 20px;
+            border-radius: 50%;
+            background: var(--coral);
+            cursor: pointer;
+            border: 3px solid var(--white);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--navy-dark);
+            color: var(--white);
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(15,23,42,0.3); }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--navy-dark);
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 2px solid var(--gray-200);
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover { border-color: var(--gray-400); }
+
+        /* CTA */
+        .cta-section {
+            padding: 100px 24px;
+            text-align: center;
+            background: linear-gradient(180deg, var(--peach-bg) 0%, var(--white) 100%);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 24px;
+            text-align: center;
+            background: var(--navy-dark);
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .footer-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--white);
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        /* Fade animation */
+        .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.6s; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-inner { grid-template-columns: 1fr; }
+            .hero-right { display: none; }
+            .usp-grid, .capabilities-grid, .team-grid { grid-template-columns: 1fr; }
+            .partners-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+        }
+
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .usp-grid, .capabilities-grid { grid-template-columns: repeat(2, 1fr); }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Showcase gallery */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .showcase-card {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+            background: var(--white);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .showcase-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(15,23,42,0.12);
+        }
+
+        .showcase-card.wide {
+            grid-column: span 2;
+        }
+
+        .showcase-img-wrap {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+        }
+
+        .showcase-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top left;
+            display: block;
+            transition: transform 0.4s;
+        }
+
+        .showcase-card:hover .showcase-img-wrap img {
+            transform: scale(1.03);
+        }
+
+        .showcase-caption {
+            padding: 20px 24px;
+        }
+
+        .showcase-caption h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .showcase-caption p {
+            font-size: 13px;
+            color: var(--gray-500);
+            line-height: 1.5;
+        }
+
+        .showcase-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 50px;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .showcase-grid { grid-template-columns: 1fr; }
+            .showcase-card.wide { grid-column: span 1; }
+        }
+
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .showcase-grid { grid-template-columns: repeat(2, 1fr); }
+            .showcase-card.wide { grid-column: span 2; }
+        }
+
+        /* Score gauge */
+        .score-gauge {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            margin: 0 auto 12px;
+        }
+        .score-gauge svg { width: 100%; height: 100%; }
+        .score-value {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--navy-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">S</div>
+                SuperCFO
+            </a>
+            <ul class="nav-links">
+                <li><a href="#opportunity">Opportunity</a></li>
+                <li><a href="#reports">Report Types</a></li>
+                <li><a href="#alignment">Alignment</a></li>
+                <li><a href="#revenue">Revenue Model</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#next-steps" class="nav-cta">Let's Talk</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobile()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="hero">
+        <div class="hero-inner">
+            <div class="hero-left">
+                <div class="hero-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    PROPOSAL FOR BURSA MALAYSIA
+                </div>
+                <h1 class="hero-title">Empower <span class="coral">Smarter Investors</span> with AI</h1>
+                <p class="hero-desc">Mesiniaga and SuperCFO propose a partnership with Bursa Malaysia to deliver AI-powered financial analysis reports that educate investors and help them make more informed decisions on Bursa-listed stocks.</p>
+                <a href="mailto:hello@supercfo.app" class="hero-cta">
+                    Schedule a Discussion
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <div class="hero-tags">
+                    <span class="hero-tag">Financial Analysis</span>
+                    <span class="hero-tag">Company Health</span>
+                    <span class="hero-tag">Investability Score</span>
+                    <span class="hero-tag">Governance</span>
+                    <span class="hero-tag">Valuation</span>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="growth-badge">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><path d="M23 6l-9.5 9.5-5-5L1 18"/></svg>
+                    <div class="growth-badge-label">INVESTABILITY</div>
+                    <div class="growth-badge-value">8.4/10</div>
+                </div>
+                <div class="dashboard-mockup">
+                    <div class="mockup-bar">
+                        <div class="mockup-bar-dot"></div>
+                        <div class="mockup-bar-dot"></div>
+                        <div class="mockup-bar-dot"></div>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                        supercfo.app / Stock Analysis
+                    </div>
+                    <div class="mockup-metrics">
+                        <div class="metric-card">
+                            <div class="metric-label"><div class="dot" style="background:var(--accent-green);"></div> ROE</div>
+                            <div class="metric-value">18.2%</div>
+                            <div class="metric-change">+3.1pp YoY</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label"><div class="dot" style="background:var(--accent-blue);"></div> P/E RATIO</div>
+                            <div class="metric-value">14.6x</div>
+                            <div class="metric-change">Below sector avg</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label"><div class="dot" style="background:var(--purple);"></div> DEBT/EQUITY</div>
+                            <div class="metric-value">0.32</div>
+                            <div class="metric-change">Healthy range</div>
+                        </div>
+                    </div>
+                    <div class="mockup-bottom">
+                        <div class="mockup-chart-area">
+                            <div class="chart-header">
+                                <div class="chart-title">Revenue &amp; Profit Trend</div>
+                                <div class="chart-tabs">
+                                    <button class="chart-tab">1Y</button>
+                                    <button class="chart-tab active">3Y</button>
+                                    <button class="chart-tab">5Y</button>
+                                </div>
+                            </div>
+                            <div class="chart-svg-area">
+                                <svg viewBox="0 0 300 80" style="width:100%;height:100%;">
+                                    <polyline points="10,55 50,48 100,40 150,35 200,28 250,22 290,15" fill="none" stroke="var(--accent-green)" stroke-width="2.5" stroke-linecap="round"/>
+                                    <polyline points="10,65 50,60 100,58 150,50 200,45 250,40 290,32" fill="none" stroke="var(--blue)" stroke-width="2" stroke-dasharray="6,4" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="mockup-sidebar">
+                            <div class="sidebar-card">
+                                <div class="sidebar-card-title">Governance Score</div>
+                                <div class="market-row"><span><span class="dot" style="background:var(--accent-green);"></span>Board Independence</span><span>Strong</span></div>
+                                <div class="market-row"><span><span class="dot" style="background:var(--accent-green);"></span>Audit Quality</span><span>High</span></div>
+                                <div class="market-row"><span><span class="dot" style="background:var(--accent-amber);"></span>Related-Party Txn</span><span>Medium</span></div>
+                            </div>
+                            <div class="sidebar-card">
+                                <div class="sidebar-card-title">AI Insights</div>
+                                <div class="insight-row"><div class="bullet"></div>Strong free cash flow generation supports dividend sustainability</div>
+                                <div class="insight-row"><div class="bullet"></div>Governance practices above sector median</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-pill">
+                    <div class="ai-pill-icon">&#10024;</div>
+                    AI-Powered Investor Intelligence
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-stats-bar">
+            <div class="hero-stats-inner">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">983+</div>
+                    <div class="hero-stat-label">Bursa-Listed Companies</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">9.7M</div>
+                    <div class="hero-stat-label">CDS Accounts in Malaysia</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">63+</div>
+                    <div class="hero-stat-label">Report Templates</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">&lt;2min</div>
+                    <div class="hero-stat-label">Report Generation Time</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== THE OPPORTUNITY ========== -->
+    <section class="section section-dark" id="opportunity">
+        <div class="container">
+            <div class="section-label">&#128161; The Opportunity</div>
+            <h2 class="section-title fade-in" style="max-width:800px;">Making Every Malaysian Investor a <span class="highlight-coral">Smarter Investor</span></h2>
+            <p class="section-subtitle fade-in">Bursa Malaysia's mission includes developing a vibrant and informed investor community. SuperCFO's AI-powered reports can help achieve this by making professional-grade financial analysis accessible to every retail and institutional investor.</p>
+            <div class="usp-grid" style="margin-top:60px;">
+                <div style="text-align:center;padding:36px 28px;border-radius:16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);" class="fade-in">
+                    <div style="width:56px;height:56px;border-radius:14px;background:rgba(249,112,102,0.15);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;">&#128202;</div>
+                    <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:var(--white);">Investment Valuation</h3>
+                    <p style="font-size:14px;color:var(--gray-400);line-height:1.6;">AI-generated DCF models, peer comparisons, P/E analysis, and fair value estimates help investors understand what a company is truly worth.</p>
+                </div>
+                <div style="text-align:center;padding:36px 28px;border-radius:16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);" class="fade-in">
+                    <div style="width:56px;height:56px;border-radius:14px;background:rgba(99,102,241,0.15);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;">&#127973;</div>
+                    <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:var(--white);">Company Health</h3>
+                    <p style="font-size:14px;color:var(--gray-400);line-height:1.6;">Comprehensive health checks covering profitability, liquidity, solvency, and efficiency ratios with easy-to-understand traffic-light scoring.</p>
+                </div>
+                <div style="text-align:center;padding:36px 28px;border-radius:16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);" class="fade-in">
+                    <div style="width:56px;height:56px;border-radius:14px;background:rgba(168,85,247,0.15);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;">&#128737;</div>
+                    <h3 style="font-size:18px;font-weight:700;margin-bottom:10px;color:var(--white);">Governance &amp; Risk</h3>
+                    <p style="font-size:14px;color:var(--gray-400);line-height:1.6;">Board independence, audit quality, related-party transactions, and ESG indicators scored and explained in plain language for all investors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== REPORT TYPES ========== -->
+    <section class="section" id="reports">
+        <div class="container">
+            <div class="section-label">&#9889; AI-Powered Reports for Investors</div>
+            <h2 class="section-title fade-in">Every Report an Investor Needs,<br><span style="color:var(--coral);">Generated by AI</span></h2>
+            <p class="section-subtitle fade-in">Investors purchasing these reports on Bursa Malaysia's platform get institutional-quality analysis at a fraction of the cost, with AI explanations that educate as they inform.</p>
+            <div class="capabilities-grid">
+                <div class="capability-card fade-in">
+                    <div class="capability-icon" style="background:rgba(99,102,241,0.1);">&#128202;</div>
+                    <h3>Financial Analysis Report</h3>
+                    <p>Comprehensive P&amp;L, balance sheet, and cash flow analysis with trend visualisations, ratio breakdowns, and AI commentary explaining what the numbers mean.</p>
+                </div>
+                <div class="capability-card fade-in">
+                    <div class="capability-icon" style="background:rgba(16,185,129,0.1);">&#127919;</div>
+                    <h3>Investability Score Card</h3>
+                    <p>A composite score (1&ndash;10) covering valuation, growth, profitability, leverage, and governance. Instantly understand if a stock is worth deeper research.</p>
+                </div>
+                <div class="capability-card fade-in">
+                    <div class="capability-icon" style="background:rgba(168,85,247,0.1);">&#128176;</div>
+                    <h3>Valuation &amp; DCF Model</h3>
+                    <p>AI-built discounted cash flow models with scenario analysis (bull/base/bear). Investors can see the fair value estimate and understand the key assumptions.</p>
+                </div>
+                <div class="capability-card fade-in">
+                    <div class="capability-icon" style="background:rgba(249,112,102,0.1);">&#127973;</div>
+                    <h3>Company Health Check</h3>
+                    <p>Traffic-light scoring across liquidity, solvency, efficiency, and profitability. Red/Amber/Green indicators make complex financial health instantly readable.</p>
+                </div>
+                <div class="capability-card fade-in">
+                    <div class="capability-icon" style="background:rgba(245,158,11,0.1);">&#128737;</div>
+                    <h3>Governance &amp; Risk Report</h3>
+                    <p>Board composition, audit committee independence, related-party transaction analysis, and ESG risk flags. Aligns with Bursa's MCCG requirements.</p>
+                </div>
+                <div class="capability-card fade-in">
+                    <div class="capability-icon" style="background:rgba(99,102,241,0.1);">&#128200;</div>
+                    <h3>Peer Comparison</h3>
+                    <p>Side-by-side comparison of up to 5 companies in the same sector. Visualise which stock leads on growth, margins, valuation, and dividend yield.</p>
+                </div>
+                <div class="capability-card fade-in">
+                    <div class="capability-icon" style="background:rgba(16,185,129,0.1);">&#128218;</div>
+                    <h3>Dividend &amp; Income Report</h3>
+                    <p>Dividend track record, payout ratios, sustainability analysis, and projected yield. Ideal for income-focused investors evaluating Bursa-listed REITs and high-yield stocks.</p>
+                </div>
+                <div class="capability-card fade-in">
+                    <div class="capability-icon" style="background:rgba(168,85,247,0.1);">&#128196;</div>
+                    <h3>Annual Report Summary</h3>
+                    <p>AI-distilled key takeaways from annual reports: strategy shifts, risk factors, management commentary highlights, and material changes &mdash; in 5 minutes instead of 5 hours.</p>
+                </div>
+                <div class="capability-card fade-in">
+                    <div class="capability-icon" style="background:rgba(249,112,102,0.1);">&#129302;</div>
+                    <h3>Ask SuperCFO (Q&amp;A)</h3>
+                    <p>Investors can ask natural language questions about any Bursa-listed company &mdash; "Is Tenaga's debt level safe?" &mdash; and receive AI-powered answers backed by real data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SEE IT IN ACTION ========== -->
+    <section class="section section-peach" id="showcase">
+        <div class="container" style="position:relative;z-index:1;">
+            <div class="section-label">&#128248; See It In Action</div>
+            <h2 class="section-title fade-in">SuperCFO is <span style="color:var(--coral);">Already Live</span></h2>
+            <p class="section-subtitle fade-in">SuperCFO is a production-ready platform already generating financial analysis, dashboards, compliance reports, and more. Here's what investors on Bursa Malaysia would experience.</p>
+
+            <div class="showcase-grid">
+                <!-- Card 1: Home / Command Center (wide) -->
+                <div class="showcase-card wide fade-in">
+                    <div class="showcase-img-wrap">
+                        <img src="screenshots/home.png" alt="SuperCFO Home - AI-powered financial command center">
+                    </div>
+                    <div class="showcase-caption">
+                        <h4>AI-Powered Financial Command Center</h4>
+                        <p>One platform covering Finance Ops, Finance Analysis, Risk Assessment, and 63+ dashboard templates. Investors choose the analysis they need and get results in minutes.</p>
+                        <span class="showcase-tag" style="background:rgba(99,102,241,0.1);color:var(--blue);">Platform Overview</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: P&L Dashboard -->
+                <div class="showcase-card fade-in">
+                    <div class="showcase-img-wrap">
+                        <img src="screenshots/pnl-dashboard.png" alt="P&L Waterfall and Operating Expense Breakdown">
+                    </div>
+                    <div class="showcase-caption">
+                        <h4>P&amp;L Waterfall &amp; Expense Analysis</h4>
+                        <p>Interactive waterfall charts and expense breakdowns help investors instantly visualise how revenue flows to profit.</p>
+                        <span class="showcase-tag" style="background:rgba(16,185,129,0.1);color:var(--accent-green);">Financial Analysis</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Sales Trend Dashboard -->
+                <div class="showcase-card fade-in">
+                    <div class="showcase-img-wrap">
+                        <img src="screenshots/sales-dashboard.png" alt="Sales Trend and Seasonality Dashboard with KPI cards">
+                    </div>
+                    <div class="showcase-caption">
+                        <h4>KPI Scorecards &amp; Trend Analysis</h4>
+                        <p>Revenue, margins, transaction trends, and AI-generated key insights &mdash; all in one interactive dashboard.</p>
+                        <span class="showcase-tag" style="background:rgba(249,112,102,0.1);color:var(--coral);">Dashboard</span>
+                    </div>
+                </div>
+
+                <!-- Card 4: Data Transform / Financial Model -->
+                <div class="showcase-card fade-in">
+                    <div class="showcase-img-wrap">
+                        <img src="screenshots/financial-model.png" alt="Financial modelling with scenario analysis and forecast assumptions">
+                    </div>
+                    <div class="showcase-caption">
+                        <h4>Scenario Analysis &amp; Forecasting</h4>
+                        <p>Base, optimistic, and pessimistic projections with transparent assumptions investors can review and understand.</p>
+                        <span class="showcase-tag" style="background:rgba(168,85,247,0.1);color:var(--purple);">Financial Model</span>
+                    </div>
+                </div>
+
+                <!-- Card 5: Sustainability / IFRS Assessment (wide) -->
+                <div class="showcase-card wide fade-in">
+                    <div class="showcase-img-wrap">
+                        <img src="screenshots/sustainability-report.png" alt="IFRS S1/S2 Sustainability Report Assessment for Genting Malaysia">
+                    </div>
+                    <div class="showcase-caption">
+                        <h4>Sustainability &amp; Compliance Assessment</h4>
+                        <p>AI-powered IFRS S1/S2 compliance reviews of sustainability reports for Bursa-listed companies. Investors can assess ESG risks and governance quality before investing.</p>
+                        <span class="showcase-tag" style="background:rgba(245,158,11,0.1);color:var(--accent-amber);">ESG &amp; Governance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ALIGNMENT WITH BURSA ========== -->
+    <section class="section section-dark" id="alignment">
+        <div class="container">
+            <div class="section-label">&#127470;&#127486; Strategic Alignment</div>
+            <h2 class="section-title fade-in">Directly Aligned with<br><span class="highlight-coral">Bursa Malaysia's Mission</span></h2>
+            <p class="section-subtitle fade-in">Every SuperCFO report reinforces Bursa Malaysia's strategic goals &mdash; from investor education to market participation and corporate transparency.</p>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px;">
+                <!-- Bursa Goal 1 -->
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px;" class="fade-in">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                        <div style="width:40px;height:40px;border-radius:10px;background:rgba(16,185,129,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;">&#127891;</div>
+                        <h3 style="font-size:17px;font-weight:700;color:var(--white);">Investor Education</h3>
+                    </div>
+                    <p style="font-size:14px;color:var(--gray-400);line-height:1.7;">Every report includes AI-generated explanations of what each ratio, metric, and score means. Retail investors don't just receive data &mdash; they learn to interpret it. This directly supports Bursa Malaysia's investor literacy programmes.</p>
+                    <div style="margin-top:16px;padding:12px;background:rgba(16,185,129,0.08);border-radius:10px;font-size:12px;color:var(--accent-green);font-weight:600;">
+                        Aligns with: Bursa Malaysia Investor Education Programme
+                    </div>
+                </div>
+                <!-- Bursa Goal 2 -->
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px;" class="fade-in">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                        <div style="width:40px;height:40px;border-radius:10px;background:rgba(99,102,241,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;">&#128200;</div>
+                        <h3 style="font-size:17px;font-weight:700;color:var(--white);">Market Participation</h3>
+                    </div>
+                    <p style="font-size:14px;color:var(--gray-400);line-height:1.7;">Confident, informed investors trade more actively. By lowering the barrier to understanding financials, SuperCFO reports encourage wider and more sustained market participation among retail investors.</p>
+                    <div style="margin-top:16px;padding:12px;background:rgba(99,102,241,0.08);border-radius:10px;font-size:12px;color:var(--accent-blue);font-weight:600;">
+                        Aligns with: Broadening the Retail Investor Base
+                    </div>
+                </div>
+                <!-- Bursa Goal 3 -->
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px;" class="fade-in">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                        <div style="width:40px;height:40px;border-radius:10px;background:rgba(168,85,247,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;">&#128737;</div>
+                        <h3 style="font-size:17px;font-weight:700;color:var(--white);">Corporate Governance</h3>
+                    </div>
+                    <p style="font-size:14px;color:var(--gray-400);line-height:1.7;">SuperCFO's governance scoring shines a light on board independence, audit quality, and related-party transactions. This reinforces the Malaysian Code on Corporate Governance (MCCG) and encourages companies to uphold high standards.</p>
+                    <div style="margin-top:16px;padding:12px;background:rgba(168,85,247,0.08);border-radius:10px;font-size:12px;color:var(--accent-purple);font-weight:600;">
+                        Aligns with: MCCG Compliance &amp; Transparency
+                    </div>
+                </div>
+                <!-- Bursa Goal 4 -->
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px;" class="fade-in">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                        <div style="width:40px;height:40px;border-radius:10px;background:rgba(249,112,102,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;">&#128176;</div>
+                        <h3 style="font-size:17px;font-weight:700;color:var(--white);">New Revenue Stream</h3>
+                    </div>
+                    <p style="font-size:14px;color:var(--gray-400);line-height:1.7;">Bursa Malaysia earns revenue share on every report sold to investors on its platform &mdash; zero development cost, zero operational overhead. Mesiniaga and SuperCFO handle all technology, integration, and support.</p>
+                    <div style="margin-top:16px;padding:12px;background:rgba(249,112,102,0.08);border-radius:10px;font-size:12px;color:var(--coral);font-weight:600;">
+                        Revenue Share Model: Zero Cost to Bursa
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== HOW IT WORKS ========== -->
+    <section class="section section-peach" id="how-it-works">
+        <div class="container" style="position:relative;z-index:1;">
+            <div class="section-label">&#128640; How It Works</div>
+            <h2 class="section-title fade-in">From Data to <span style="color:var(--coral);">Investor Insight</span> in Seconds</h2>
+            <p class="section-subtitle fade-in">A seamless investor experience integrated into the Bursa Malaysia ecosystem.</p>
+
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:60px;">
+                <div style="text-align:center;padding:32px 20px;background:var(--white);border-radius:16px;border:1px solid var(--gray-200);position:relative;" class="fade-in">
+                    <div style="width:48px;height:48px;border-radius:50%;background:var(--coral);color:white;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin:0 auto 16px;">1</div>
+                    <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">Investor Browses</h3>
+                    <p style="font-size:13px;color:var(--gray-500);line-height:1.6;">Investor views a Bursa-listed stock page and sees the option to purchase a SuperCFO analysis report.</p>
+                </div>
+                <div style="text-align:center;padding:32px 20px;background:var(--white);border-radius:16px;border:1px solid var(--gray-200);position:relative;" class="fade-in">
+                    <div style="width:48px;height:48px;border-radius:50%;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin:0 auto 16px;">2</div>
+                    <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">Selects Report Type</h3>
+                    <p style="font-size:13px;color:var(--gray-500);line-height:1.6;">Chooses from Financial Analysis, Valuation, Company Health, Governance, Peer Comparison, or other report types.</p>
+                </div>
+                <div style="text-align:center;padding:32px 20px;background:var(--white);border-radius:16px;border:1px solid var(--gray-200);position:relative;" class="fade-in">
+                    <div style="width:48px;height:48px;border-radius:50%;background:var(--accent-green);color:white;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin:0 auto 16px;">3</div>
+                    <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">AI Generates Report</h3>
+                    <p style="font-size:13px;color:var(--gray-500);line-height:1.6;">SuperCFO analyses the company's financial data and generates an interactive, education-rich report in under 2 minutes.</p>
+                </div>
+                <div style="text-align:center;padding:32px 20px;background:var(--white);border-radius:16px;border:1px solid var(--gray-200);position:relative;" class="fade-in">
+                    <div style="width:48px;height:48px;border-radius:50%;background:var(--purple);color:white;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;margin:0 auto 16px;">4</div>
+                    <h3 style="font-size:16px;font-weight:700;margin-bottom:8px;">Learn &amp; Decide</h3>
+                    <p style="font-size:13px;color:var(--gray-500);line-height:1.6;">Investor reviews interactive charts, AI explanations, and scores. Makes an informed investment decision &mdash; and learns along the way.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== REVENUE MODEL ========== -->
+    <section class="section" id="revenue" style="background:linear-gradient(180deg, var(--white) 0%, var(--peach-bg) 100%);">
+        <div class="container">
+            <div class="section-label">&#128176; Revenue Model</div>
+            <h2 class="section-title fade-in">A Win-Win <span style="color:var(--coral);">Revenue Model</span></h2>
+            <p class="section-subtitle fade-in">Bursa Malaysia earns a revenue share on every report sold to investors &mdash; with zero development cost. Mesiniaga and SuperCFO handle all technology, integration, and support as one delivery partner.</p>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:60px;align-items:start;">
+
+                <!-- Left: Revenue Simulation -->
+                <div class="fade-in">
+                    <div style="background:var(--navy-dark);border-radius:16px;padding:32px;color:var(--white);margin-bottom:24px;">
+                        <h3 style="font-size:16px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
+                            <span style="font-size:18px;">&#128176;</span>
+                            Revenue Simulation
+                        </h3>
+
+                        <div style="margin-bottom:20px;">
+                            <label style="font-size:12px;font-weight:600;color:var(--gray-400);display:block;margin-bottom:6px;">Reports Sold Per Year</label>
+                            <input type="range" class="sim-slider" id="bursaReports" min="5000" max="200000" value="50000" step="1000" style="width:100%;">
+                            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-500);margin-top:4px;">
+                                <span>5,000</span>
+                                <span style="font-weight:700;color:var(--coral);font-size:14px;" id="bursaReportsVal">50,000</span>
+                                <span>200,000</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom:24px;">
+                            <label style="font-size:12px;font-weight:600;color:var(--gray-400);display:block;margin-bottom:6px;">Average Price Per Report (RM)</label>
+                            <input type="range" class="sim-slider" id="bursaPrice" min="10" max="200" value="50" step="5" style="width:100%;">
+                            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-500);margin-top:4px;">
+                                <span>RM 10</span>
+                                <span style="font-weight:700;color:var(--coral);font-size:14px;" id="bursaPriceVal">RM 50</span>
+                                <span>RM 200</span>
+                            </div>
+                        </div>
+
+                        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
+                                <span style="font-size:13px;color:var(--gray-400);">Annual Report Revenue</span>
+                                <span style="font-size:24px;font-weight:800;color:var(--accent-green);" id="bursaAnnualRev">RM 2.5M</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06);">
+                                <span style="font-size:13px;color:var(--gray-400);">Monthly Average</span>
+                                <span style="font-size:18px;font-weight:700;color:var(--white);" id="bursaMonthlyRev">RM 208.3K</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Revenue share model -->
+                    <div style="background:var(--white);border-radius:16px;padding:28px;border:1px solid var(--gray-200);">
+                        <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;">Revenue Share Model</h3>
+                        <p style="font-size:12px;color:var(--gray-400);margin-bottom:16px;">Mesiniaga &amp; SuperCFO jointly deliver to Bursa Malaysia</p>
+                        <div style="display:flex;flex-direction:column;gap:10px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--gray-50);border-radius:10px;">
+                                <div>
+                                    <div style="font-size:13px;font-weight:600;">Bursa Malaysia</div>
+                                    <div style="font-size:11px;color:var(--gray-400);">Platform, distribution &amp; investor base</div>
+                                </div>
+                                <div style="font-size:18px;font-weight:800;color:var(--coral);" id="bursaShare">RM 750K/yr</div>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--gray-50);border-radius:10px;">
+                                <div>
+                                    <div style="font-size:13px;font-weight:600;">Mesiniaga + SuperCFO</div>
+                                    <div style="font-size:11px;color:var(--gray-400);">AI engine, integration, sales &amp; support</div>
+                                </div>
+                                <div style="font-size:18px;font-weight:800;color:var(--accent-blue);" id="partnerShare">RM 1.8M/yr</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;margin-top:16px;gap:2px;">
+                            <div style="width:30%;background:var(--coral);border-radius:4px;"></div>
+                            <div style="width:70%;background:var(--accent-blue);border-radius:4px;"></div>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--gray-400);">
+                            <span>Bursa 30%</span>
+                            <span>Mesiniaga + SuperCFO 70%</span>
+                        </div>
+                        <p style="font-size:11px;color:var(--gray-400);margin-top:12px;line-height:1.5;">Illustrative 30/70 split. Bursa earns incremental revenue with zero development cost. Mesiniaga and SuperCFO operate as one delivery partner.</p>
+                    </div>
+                </div>
+
+                <!-- Right: Why this works -->
+                <div class="fade-in">
+                    <div style="background:var(--white);border-radius:16px;padding:32px;border:1px solid var(--gray-200);margin-bottom:24px;">
+                        <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+                            <span style="width:32px;height:32px;border-radius:8px;background:rgba(249,112,102,0.1);display:inline-flex;align-items:center;justify-content:center;font-size:16px;">&#128161;</span>
+                            Why This Works for Bursa
+                        </h3>
+                        <div style="display:flex;flex-direction:column;gap:14px;">
+                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
+                                <span style="font-size:20px;flex-shrink:0;">&#128176;</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Zero Capex, Pure Revenue</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Bursa provides platform and investor access. All technology is built and maintained by Mesiniaga and SuperCFO. Bursa earns a share of every report sold.</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
+                                <span style="font-size:20px;flex-shrink:0;">&#127891;</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Investor Education at Scale</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Every report is an education tool. AI explains ratios, flags risks, and teaches investors to read financials &mdash; aligned with Bursa's education mandate.</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
+                                <span style="font-size:20px;flex-shrink:0;">&#128200;</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Increased Trading Activity</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">More informed investors trade more confidently. This drives higher trading volumes and transaction fees for Bursa Malaysia.</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
+                                <span style="font-size:20px;flex-shrink:0;">&#128737;</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Governance Reinforcement</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Governance scoring creates market pressure for listed companies to maintain high standards &mdash; strengthening the overall quality of Bursa-listed stocks.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Flywheel -->
+                    <div style="background:linear-gradient(135deg,rgba(249,112,102,0.06),rgba(168,85,247,0.06));border-radius:16px;padding:24px;border:1px solid rgba(249,112,102,0.15);">
+                        <h4 style="font-size:14px;font-weight:700;margin-bottom:12px;">&#128260; The Flywheel Effect</h4>
+                        <div style="font-size:13px;color:var(--gray-500);line-height:1.8;">
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <span style="color:var(--coral);font-weight:700;">1.</span> Investors purchase SuperCFO reports on Bursa
+                            </div>
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <span style="color:var(--coral);font-weight:700;">2.</span> They learn to read financials and assess company quality
+                            </div>
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <span style="color:var(--coral);font-weight:700;">3.</span> Increased confidence leads to more active market participation
+                            </div>
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <span style="color:var(--coral);font-weight:700;">4.</span> Bursa earns more from trading fees and report sales
+                            </div>
+                            <div style="display:flex;align-items:center;gap:8px;">
+                                <span style="color:var(--coral);font-weight:700;">5.</span> More informed demand for reports &rarr; cycle repeats
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Market Size Context -->
+                    <div style="margin-top:24px;background:var(--white);border-radius:16px;padding:24px;border:1px solid var(--gray-200);">
+                        <h4 style="font-size:14px;font-weight:700;margin-bottom:14px;">&#128202; Market Potential</h4>
+                        <div style="font-size:13px;color:var(--gray-500);line-height:2;">
+                            <div style="display:flex;justify-content:space-between;"><span>CDS Accounts in Malaysia</span><span style="color:var(--navy-dark);font-weight:700;">~9.7 million</span></div>
+                            <div style="display:flex;justify-content:space-between;"><span>Bursa-Listed Companies</span><span style="color:var(--navy-dark);font-weight:700;">983+</span></div>
+                            <div style="display:flex;justify-content:space-between;"><span>If 1% of CDS holders buy 1 report/year</span><span style="color:var(--accent-green);font-weight:700;">~97,000 reports</span></div>
+                            <div style="display:flex;justify-content:space-between;"><span>At RM 50/report average</span><span style="color:var(--accent-green);font-weight:700;">RM 4.85M/yr</span></div>
+                            <div style="display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);padding-top:8px;margin-top:8px;"><span style="font-weight:700;color:var(--navy-dark);">Bursa's 30% Share</span><span style="color:var(--coral);font-weight:800;font-size:15px;">RM 1.46M/yr</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== WHO DELIVERS ========== -->
+    <section class="section section-dark" id="delivery">
+        <div class="container">
+            <div class="section-label">&#129309; Delivery Partnership</div>
+            <h2 class="section-title fade-in">Delivered by <span class="highlight-coral">Mesiniaga + SuperCFO</span></h2>
+            <p class="section-subtitle fade-in">Mesiniaga and SuperCFO operate as one delivery partner. Bursa Malaysia benefits from enterprise-grade technology and support with zero operational burden.</p>
+
+            <div class="partners-grid" style="margin-top:48px;">
+                <div class="partner-card fade-in">
+                    <div class="partner-icon" style="background:white;padding:6px;"><img src="https://logo.clearbit.com/mesiniaga.com.my" alt="Mesiniaga" style="width:100%;height:100%;object-fit:contain;border-radius:6px;" onerror="this.parentElement.innerHTML='&#127970;'"></div>
+                    <div class="partner-info">
+                        <h3>Mesiniaga Berhad</h3>
+                        <p>Malaysia's leading ICT solutions provider (Bursa-listed) with deep enterprise relationships, nationwide support infrastructure, and a track record of delivering complex technology solutions to GLC and corporate clients.</p>
+                        <span class="partner-tag">Enterprise Integration &amp; Support</span>
+                    </div>
+                </div>
+                <div class="partner-card fade-in">
+                    <div class="partner-icon" style="background:white;padding:6px;"><img src="https://logo.clearbit.com/supercfo.app" alt="SuperCFO" style="width:100%;height:100%;object-fit:contain;border-radius:6px;" onerror="this.parentElement.innerHTML='&#129302;'"></div>
+                    <div class="partner-info">
+                        <h3>SuperCFO</h3>
+                        <p>AI finance agent purpose-built for financial analysis. 63+ report templates, IFRS/MPERS compliance, interactive dashboards, and natural language Q&amp;A. Generates institutional-quality reports in under 2 minutes.</p>
+                        <span class="partner-tag">AI Engine &amp; Financial Intelligence</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+                <div style="text-align:center;padding:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;" class="fade-in">
+                    <div style="font-size:28px;margin-bottom:8px;">&#128187;</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Mesiniaga Handles</div>
+                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">System integration with Bursa platform, enterprise SLA, compliance, support escalation, and account management.</div>
+                </div>
+                <div style="text-align:center;padding:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;" class="fade-in">
+                    <div style="font-size:28px;margin-bottom:8px;">&#129302;</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">SuperCFO Handles</div>
+                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">AI report engine, financial data processing, report generation, dashboard UX, and continuous product improvement.</div>
+                </div>
+                <div style="text-align:center;padding:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;" class="fade-in">
+                    <div style="font-size:28px;margin-bottom:8px;">&#128200;</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Bursa Malaysia Gets</div>
+                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">Revenue share on every report sold, enhanced investor education, increased market participation, and zero operational overhead.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TEAM ========== -->
+    <section class="section section-peach" id="team">
+        <div class="container" style="position:relative;z-index:1;">
+            <div class="section-label">&#128101; The Team Behind SuperCFO</div>
+            <h2 class="section-title fade-in">Built by <span style="color:var(--coral);">Industry</span> Veterans</h2>
+            <p class="section-subtitle fade-in">Our founding team combines deep expertise in technology, finance, and product development.</p>
+
+            <div class="team-grid">
+                <div class="team-card fade-in">
+                    <div class="team-avatar"><img src="https://github.com/jeleowWMsdtseru/aitraining2U/blob/main/Picture_Chan%20Wei%20Khjan.webp?raw=true" alt="Chan Wei Khjan"></div>
+                    <h3>Chan Wei Khjan</h3>
+                    <div class="team-role">Product Lead</div>
+                    <div class="team-bio">Experienced auditor with background at YYC Advisors and KPMG. Member of the AI Advisory Board of the Malaysian Institute of Accountants. Wei Khjan brings deep audit and financial reporting expertise to shape SuperCFO's product direction.</div>
+                    <a href="https://www.linkedin.com/in/chanweikhjan/" target="_blank" rel="noopener" class="team-linkedin">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        LinkedIn Profile
+                    </a>
+                </div>
+                <div class="team-card fade-in">
+                    <div class="team-avatar"><img src="https://github.com/jeleowWMsdtseru/aitraining2U/blob/main/Picture_Warren%20Leow.webp?raw=true" alt="Warren Leow"></div>
+                    <h3>Warren Leow</h3>
+                    <div class="team-role">Strategy &amp; Growth</div>
+                    <div class="team-bio">Former Bain &amp; Company consultant bringing world-class strategy and problem-solving rigour to SuperCFO. Warren drives go-to-market strategy, partnerships, and commercial growth across the region.</div>
+                    <a href="https://www.linkedin.com/in/warren-leow-9409446/" target="_blank" rel="noopener" class="team-linkedin">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        LinkedIn Profile
+                    </a>
+                </div>
+                <div class="team-card fade-in">
+                    <div class="team-avatar"><img src="https://github.com/jeleowWMsdtseru/aitraining2U/blob/main/Profile_Marcus.webp?raw=true" alt="Marcus Chia"></div>
+                    <h3>Marcus Chia</h3>
+                    <div class="team-role">Product Expert</div>
+                    <div class="team-bio">Product specialist with a sharp eye for user experience and market fit. Marcus ensures SuperCFO delivers intuitive workflows that finance professionals actually want to use.</div>
+                    <a href="https://www.linkedin.com/in/marcusmark5/" target="_blank" rel="noopener" class="team-linkedin">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        LinkedIn Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="cta-section" id="next-steps">
+        <div class="container">
+            <div class="section-label">&#10024; Next Steps</div>
+            <h2 class="section-title fade-in">Let's Build <span style="color:var(--coral);">Smarter Investors</span> Together</h2>
+            <p class="section-subtitle fade-in" style="margin:0 auto;">We'd welcome the opportunity to present a live demo to the Bursa Malaysia team and explore how SuperCFO can support your investor education and market development goals.</p>
+            <div class="cta-buttons fade-in">
+                <a href="mailto:hello@supercfo.app" class="btn-primary">
+                    Schedule a Demo
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="https://supercfo.app" target="_blank" class="btn-secondary">
+                    Try SuperCFO
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">SuperCFO</div>
+            <p>AI-Powered Investor Intelligence for Bursa Malaysia</p>
+            <p style="margin-top:8px;font-size:13px;">A joint proposal by Mesiniaga Berhad &amp; SuperCFO</p>
+            <p style="margin-top:16px;font-size:12px;color:var(--gray-500);">&copy; 2026 SuperCFO. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll progress
+        window.addEventListener('scroll', () => {
+            const p = (document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100;
+            document.getElementById('scrollProgress').style.width = p + '%';
+        });
+
+        // Fade-in observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Bursa Revenue Simulator
+        function fmtRM(v) {
+            if (v >= 1e9) return 'RM ' + (v/1e9).toFixed(2) + 'B';
+            if (v >= 1e6) return 'RM ' + (v/1e6).toFixed(1) + 'M';
+            if (v >= 1e3) return 'RM ' + (v/1e3).toFixed(0) + 'K';
+            return 'RM ' + v.toFixed(0);
+        }
+
+        function updateBursa() {
+            const reports = +document.getElementById('bursaReports').value;
+            const price = +document.getElementById('bursaPrice').value;
+            const annual = reports * price;
+            const monthly = annual / 12;
+            const bursaCut = annual * 0.3;
+            const partnerCut = annual * 0.7;
+
+            document.getElementById('bursaReportsVal').textContent = reports.toLocaleString();
+            document.getElementById('bursaPriceVal').textContent = 'RM ' + price;
+            document.getElementById('bursaAnnualRev').textContent = fmtRM(annual);
+            document.getElementById('bursaMonthlyRev').textContent = fmtRM(monthly);
+            document.getElementById('bursaShare').textContent = fmtRM(bursaCut) + '/yr';
+            document.getElementById('partnerShare').textContent = fmtRM(partnerCut) + '/yr';
+        }
+
+        ['bursaReports','bursaPrice'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateBursa);
+        });
+        updateBursa();
+
+        // Mobile menu
+        function toggleMobile() {
+            const l = document.querySelector('.nav-links');
+            if (l.style.display === 'flex') { l.style.display = 'none'; }
+            else {
+                l.style.display = 'flex';
+                l.style.flexDirection = 'column';
+                l.style.position = 'absolute';
+                l.style.top = '72px';
+                l.style.left = '0';
+                l.style.right = '0';
+                l.style.background = 'white';
+                l.style.padding = '24px';
+                l.style.gap = '16px';
+                l.style.boxShadow = '0 8px 30px rgba(0,0,0,0.1)';
+            }
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', e => {
+                const h = link.getAttribute('href');
+                if (h.startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(h).scrollIntoView({ behavior: 'smooth' });
+                    if (window.innerWidth < 768) document.querySelector('.nav-links').style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
