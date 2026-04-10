@@ -1405,154 +1405,290 @@
     <section class="section" id="revenue" style="background:linear-gradient(180deg, var(--white) 0%, var(--peach-bg) 100%);">
         <div class="container">
             <div class="section-label">&#128176; Revenue Model</div>
-            <h2 class="section-title fade-in">A Win-Win <span style="color:var(--coral);">Revenue Model</span></h2>
-            <p class="section-subtitle fade-in">Bursa Malaysia earns a revenue share on every report sold to investors &mdash; with zero development cost. Mesiniaga and SuperCFO handle all technology, integration, and support as one delivery partner.</p>
+            <h2 class="section-title fade-in">Two Flexible <span style="color:var(--coral);">Revenue Models</span></h2>
+            <p class="section-subtitle fade-in">We propose two commercial scenarios for Bursa Malaysia to choose from. Both models include a one-time setup fee and give Bursa full control of security via key management. Mesiniaga provides infrastructure and security; SuperCFO delivers product innovation.</p>
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:60px;align-items:start;">
+            <!-- Scenario Tabs -->
+            <div style="display:flex;gap:12px;margin-top:48px;margin-bottom:32px;" class="fade-in">
+                <button id="tabA" onclick="switchScenario('A')" style="flex:1;padding:16px 24px;border-radius:12px;border:2px solid var(--coral);background:var(--coral);color:white;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;">Scenario A: Setup + % of Subscription Sales</button>
+                <button id="tabB" onclick="switchScenario('B')" style="flex:1;padding:16px 24px;border-radius:12px;border:2px solid var(--gray-300);background:var(--white);color:var(--gray-600);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;">Scenario B: Setup + Wholesale License</button>
+            </div>
 
-                <!-- Left: Revenue Simulation -->
+            <!-- ===== SCENARIO A ===== -->
+            <div id="scenarioA" style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">
+
+                <!-- Left: Revenue Simulation A -->
                 <div class="fade-in">
                     <div style="background:var(--navy-dark);border-radius:16px;padding:32px;color:var(--white);margin-bottom:24px;">
-                        <h3 style="font-size:16px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px;">
+                        <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
                             <span style="font-size:18px;">&#128176;</span>
-                            Revenue Simulation
+                            Scenario A: Revenue Simulation
                         </h3>
+                        <p style="font-size:12px;color:var(--gray-400);margin-bottom:20px;">Setup fee + percentage of each subscription/report sale to investors</p>
+
+                        <div style="padding:14px 18px;background:rgba(249,112,102,0.1);border-radius:10px;border:1px solid rgba(249,112,102,0.2);margin-bottom:20px;">
+                            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);margin-bottom:4px;">One-Time Setup Fee</div>
+                            <div style="font-size:24px;font-weight:800;color:var(--coral);">RM 500K</div>
+                            <div style="font-size:11px;color:var(--gray-400);margin-top:2px;">Platform integration, customisation &amp; deployment</div>
+                        </div>
 
                         <div style="margin-bottom:20px;">
-                            <label style="font-size:12px;font-weight:600;color:var(--gray-400);display:block;margin-bottom:6px;">Reports Sold Per Year</label>
-                            <input type="range" class="sim-slider" id="bursaReports" min="5000" max="200000" value="50000" step="1000" style="width:100%;">
+                            <label style="font-size:12px;font-weight:600;color:var(--gray-400);display:block;margin-bottom:6px;">Active Investors Who Subscribe (%)</label>
+                            <input type="range" class="sim-slider" id="subRate" min="1" max="20" value="5" step="1" style="width:100%;">
                             <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-500);margin-top:4px;">
-                                <span>5,000</span>
-                                <span style="font-weight:700;color:var(--coral);font-size:14px;" id="bursaReportsVal">50,000</span>
-                                <span>200,000</span>
+                                <span>1%</span>
+                                <span style="font-weight:700;color:var(--coral);font-size:14px;" id="subRateVal">5% (100,000 subscribers)</span>
+                                <span>20%</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom:20px;">
+                            <label style="font-size:12px;font-weight:600;color:var(--gray-400);display:block;margin-bottom:6px;">Monthly Subscription Price (RM)</label>
+                            <input type="range" class="sim-slider" id="subPrice" min="10" max="100" value="29" step="1" style="width:100%;">
+                            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-500);margin-top:4px;">
+                                <span>RM 10</span>
+                                <span style="font-weight:700;color:var(--coral);font-size:14px;" id="subPriceVal">RM 29/mo</span>
+                                <span>RM 100</span>
                             </div>
                         </div>
                         <div style="margin-bottom:24px;">
-                            <label style="font-size:12px;font-weight:600;color:var(--gray-400);display:block;margin-bottom:6px;">Average Price Per Report (RM)</label>
-                            <input type="range" class="sim-slider" id="bursaPrice" min="10" max="200" value="50" step="5" style="width:100%;">
+                            <label style="font-size:12px;font-weight:600;color:var(--gray-400);display:block;margin-bottom:6px;">Bursa's Revenue Share (%)</label>
+                            <input type="range" class="sim-slider" id="bursaPct" min="10" max="50" value="30" step="5" style="width:100%;">
                             <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-500);margin-top:4px;">
-                                <span>RM 10</span>
-                                <span style="font-weight:700;color:var(--coral);font-size:14px;" id="bursaPriceVal">RM 50</span>
-                                <span>RM 200</span>
+                                <span>10%</span>
+                                <span style="font-weight:700;color:var(--coral);font-size:14px;" id="bursaPctVal">30%</span>
+                                <span>50%</span>
                             </div>
                         </div>
 
                         <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;">
                             <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
-                                <span style="font-size:13px;color:var(--gray-400);">Annual Report Revenue</span>
-                                <span style="font-size:24px;font-weight:800;color:var(--accent-green);" id="bursaAnnualRev">RM 2.5M</span>
+                                <span style="font-size:13px;color:var(--gray-400);">Total Annual Subscription Revenue</span>
+                                <span style="font-size:24px;font-weight:800;color:var(--accent-green);" id="aAnnualRev">RM 34.8M</span>
                             </div>
                             <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06);">
-                                <span style="font-size:13px;color:var(--gray-400);">Monthly Average</span>
-                                <span style="font-size:18px;font-weight:700;color:var(--white);" id="bursaMonthlyRev">RM 208.3K</span>
+                                <span style="font-size:13px;color:var(--gray-400);">Bursa's Annual Share</span>
+                                <span style="font-size:20px;font-weight:800;color:var(--coral);" id="aBursaShare">RM 10.4M</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06);">
+                                <span style="font-size:13px;color:var(--gray-400);">Mesiniaga + SuperCFO Share</span>
+                                <span style="font-size:18px;font-weight:700;color:var(--white);" id="aPartnerShare">RM 24.4M</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Revenue share model -->
+                    <!-- Revenue share bar -->
                     <div style="background:var(--white);border-radius:16px;padding:28px;border:1px solid var(--gray-200);">
-                        <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;">Revenue Share Model</h3>
-                        <p style="font-size:12px;color:var(--gray-400);margin-bottom:16px;">Mesiniaga &amp; SuperCFO jointly deliver to Bursa Malaysia</p>
-                        <div style="display:flex;flex-direction:column;gap:10px;">
-                            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--gray-50);border-radius:10px;">
-                                <div>
-                                    <div style="font-size:13px;font-weight:600;">Bursa Malaysia</div>
-                                    <div style="font-size:11px;color:var(--gray-400);">Platform, distribution &amp; investor base</div>
-                                </div>
-                                <div style="font-size:18px;font-weight:800;color:var(--coral);" id="bursaShare">RM 750K/yr</div>
-                            </div>
-                            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--gray-50);border-radius:10px;">
-                                <div>
-                                    <div style="font-size:13px;font-weight:600;">Mesiniaga + SuperCFO</div>
-                                    <div style="font-size:11px;color:var(--gray-400);">AI engine, integration, sales &amp; support</div>
-                                </div>
-                                <div style="font-size:18px;font-weight:800;color:var(--accent-blue);" id="partnerShare">RM 1.8M/yr</div>
-                            </div>
-                        </div>
-                        <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;margin-top:16px;gap:2px;">
-                            <div style="width:30%;background:var(--coral);border-radius:4px;"></div>
-                            <div style="width:70%;background:var(--accent-blue);border-radius:4px;"></div>
+                        <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;">Revenue Split</h3>
+                        <p style="font-size:12px;color:var(--gray-400);margin-bottom:16px;">Bursa earns recurring revenue on every active subscription</p>
+                        <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px;">
+                            <div id="aBarBursa" style="width:30%;background:var(--coral);border-radius:4px;transition:width 0.3s;"></div>
+                            <div id="aBarPartner" style="width:70%;background:var(--accent-blue);border-radius:4px;transition:width 0.3s;"></div>
                         </div>
                         <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--gray-400);">
-                            <span>Bursa 30%</span>
-                            <span>Mesiniaga + SuperCFO 70%</span>
+                            <span id="aBarBursaLabel">Bursa 30%</span>
+                            <span id="aBarPartnerLabel">Mesiniaga + SuperCFO 70%</span>
                         </div>
-                        <p style="font-size:11px;color:var(--gray-400);margin-top:12px;line-height:1.5;">Illustrative 30/70 split. Bursa earns incremental revenue with zero development cost. Mesiniaga and SuperCFO operate as one delivery partner.</p>
+                        <p style="font-size:11px;color:var(--gray-400);margin-top:12px;line-height:1.5;">Bursa earns a percentage of every subscription sale with zero development cost. Revenue scales as the subscriber base grows.</p>
                     </div>
                 </div>
 
-                <!-- Right: Why this works -->
+                <!-- Right: Why Scenario A works -->
                 <div class="fade-in">
                     <div style="background:var(--white);border-radius:16px;padding:32px;border:1px solid var(--gray-200);margin-bottom:24px;">
                         <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
                             <span style="width:32px;height:32px;border-radius:8px;background:rgba(249,112,102,0.1);display:inline-flex;align-items:center;justify-content:center;font-size:16px;">&#128161;</span>
-                            Why This Works for Bursa
+                            Why Scenario A Works for Bursa
                         </h3>
                         <div style="display:flex;flex-direction:column;gap:14px;">
                             <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
+                                <span style="font-size:20px;flex-shrink:0;">&#128200;</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Uncapped Upside</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Revenue grows as more investors subscribe. With 2M+ active investors, even single-digit conversion rates produce significant recurring revenue.</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
                                 <span style="font-size:20px;flex-shrink:0;">&#128176;</span>
                                 <div>
-                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Zero Capex, Pure Revenue</div>
-                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Bursa provides platform and investor access. All technology is built and maintained by Mesiniaga and SuperCFO. Bursa earns a share of every report sold.</div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Recurring Revenue Stream</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Monthly subscriptions create predictable, recurring income. Unlike one-off report sales, subscribers keep paying month after month.</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
+                                <span style="font-size:20px;flex-shrink:0;">&#128274;</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Full Security Control</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Bursa maintains full control of API keys and access management. Mesiniaga provides the infrastructure and security layer. No data leaves Bursa's control.</div>
                                 </div>
                             </div>
                             <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
                                 <span style="font-size:20px;flex-shrink:0;">&#127891;</span>
                                 <div>
-                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Investor Education at Scale</div>
-                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Every report is an education tool. AI explains ratios, flags risks, and teaches investors to read financials &mdash; aligned with Bursa's education mandate.</div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Investor Stickiness</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Subscribed investors are more engaged, trade more frequently, and stay on the Bursa platform longer &mdash; driving trading volume and fees.</div>
                                 </div>
-                            </div>
-                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
-                                <span style="font-size:20px;flex-shrink:0;">&#128200;</span>
-                                <div>
-                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Increased Trading Activity</div>
-                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">More informed investors trade more confidently. This drives higher trading volumes and transaction fees for Bursa Malaysia.</div>
-                                </div>
-                            </div>
-                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
-                                <span style="font-size:20px;flex-shrink:0;">&#128737;</span>
-                                <div>
-                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Governance Reinforcement</div>
-                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Governance scoring creates market pressure for listed companies to maintain high standards &mdash; strengthening the overall quality of Bursa-listed stocks.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Flywheel -->
-                    <div style="background:linear-gradient(135deg,rgba(249,112,102,0.06),rgba(168,85,247,0.06));border-radius:16px;padding:24px;border:1px solid rgba(249,112,102,0.15);">
-                        <h4 style="font-size:14px;font-weight:700;margin-bottom:12px;">&#128260; The Flywheel Effect</h4>
-                        <div style="font-size:13px;color:var(--gray-500);line-height:1.8;">
-                            <div style="display:flex;align-items:center;gap:8px;">
-                                <span style="color:var(--coral);font-weight:700;">1.</span> Investors purchase SuperCFO reports on Bursa
-                            </div>
-                            <div style="display:flex;align-items:center;gap:8px;">
-                                <span style="color:var(--coral);font-weight:700;">2.</span> They learn to read financials and assess company quality
-                            </div>
-                            <div style="display:flex;align-items:center;gap:8px;">
-                                <span style="color:var(--coral);font-weight:700;">3.</span> Increased confidence leads to more active market participation
-                            </div>
-                            <div style="display:flex;align-items:center;gap:8px;">
-                                <span style="color:var(--coral);font-weight:700;">4.</span> Bursa earns more from trading fees and report sales
-                            </div>
-                            <div style="display:flex;align-items:center;gap:8px;">
-                                <span style="color:var(--coral);font-weight:700;">5.</span> More informed demand for reports &rarr; cycle repeats
                             </div>
                         </div>
                     </div>
 
                     <!-- Market Size Context -->
-                    <div style="margin-top:24px;background:var(--white);border-radius:16px;padding:24px;border:1px solid var(--gray-200);">
-                        <h4 style="font-size:14px;font-weight:700;margin-bottom:14px;">&#128202; Market Potential</h4>
+                    <div style="background:var(--white);border-radius:16px;padding:24px;border:1px solid var(--gray-200);">
+                        <h4 style="font-size:14px;font-weight:700;margin-bottom:14px;">&#128202; Market Potential (Scenario A)</h4>
                         <div style="font-size:13px;color:var(--gray-500);line-height:2;">
-                            <div style="display:flex;justify-content:space-between;"><span>CDS Accounts in Malaysia</span><span style="color:var(--navy-dark);font-weight:700;">~9.7 million</span></div>
+                            <div style="display:flex;justify-content:space-between;"><span>Active Bursa Investors</span><span style="color:var(--navy-dark);font-weight:700;">2,000,000+</span></div>
                             <div style="display:flex;justify-content:space-between;"><span>Bursa-Listed Companies</span><span style="color:var(--navy-dark);font-weight:700;">983+</span></div>
-                            <div style="display:flex;justify-content:space-between;"><span>If 1% of CDS holders buy 1 report/year</span><span style="color:var(--accent-green);font-weight:700;">~97,000 reports</span></div>
-                            <div style="display:flex;justify-content:space-between;"><span>At RM 50/report average</span><span style="color:var(--accent-green);font-weight:700;">RM 4.85M/yr</span></div>
-                            <div style="display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);padding-top:8px;margin-top:8px;"><span style="font-weight:700;color:var(--navy-dark);">Bursa's 30% Share</span><span style="color:var(--coral);font-weight:800;font-size:15px;">RM 1.46M/yr</span></div>
+                            <div style="display:flex;justify-content:space-between;"><span>If 5% subscribe at RM 29/mo</span><span style="color:var(--accent-green);font-weight:700;">RM 34.8M/yr</span></div>
+                            <div style="display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);padding-top:8px;margin-top:8px;"><span style="font-weight:700;color:var(--navy-dark);">Bursa's 30% Share</span><span style="color:var(--coral);font-weight:800;font-size:15px;">RM 10.4M/yr</span></div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- ===== SCENARIO B ===== -->
+            <div id="scenarioB" style="display:none;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">
+
+                <!-- Left: Wholesale License Simulation -->
+                <div class="fade-in visible">
+                    <div style="background:var(--navy-dark);border-radius:16px;padding:32px;color:var(--white);margin-bottom:24px;">
+                        <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:10px;">
+                            <span style="font-size:18px;">&#128176;</span>
+                            Scenario B: Wholesale License
+                        </h3>
+                        <p style="font-size:12px;color:var(--gray-400);margin-bottom:20px;">Setup fee + annual wholesale license fee for unlimited investor access</p>
+
+                        <div style="padding:14px 18px;background:rgba(249,112,102,0.1);border-radius:10px;border:1px solid rgba(249,112,102,0.2);margin-bottom:20px;">
+                            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-400);margin-bottom:4px;">One-Time Setup Fee</div>
+                            <div style="font-size:24px;font-weight:800;color:var(--coral);">RM 500K</div>
+                            <div style="font-size:11px;color:var(--gray-400);margin-top:2px;">Platform integration, customisation &amp; deployment</div>
+                        </div>
+
+                        <div style="margin-bottom:20px;">
+                            <label style="font-size:12px;font-weight:600;color:var(--gray-400);display:block;margin-bottom:6px;">Annual Wholesale License Fee (RM)</label>
+                            <input type="range" class="sim-slider" id="bLicense" min="1000000" max="10000000" value="3000000" step="500000" style="width:100%;">
+                            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-500);margin-top:4px;">
+                                <span>RM 1M</span>
+                                <span style="font-weight:700;color:var(--coral);font-size:14px;" id="bLicenseVal">RM 3.0M/yr</span>
+                                <span>RM 10M</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom:24px;">
+                            <label style="font-size:12px;font-weight:600;color:var(--gray-400);display:block;margin-bottom:6px;">License Term (Years)</label>
+                            <input type="range" class="sim-slider" id="bTerm" min="1" max="5" value="3" step="1" style="width:100%;">
+                            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--gray-500);margin-top:4px;">
+                                <span>1 yr</span>
+                                <span style="font-weight:700;color:var(--coral);font-size:14px;" id="bTermVal">3 years</span>
+                                <span>5 yrs</span>
+                            </div>
+                        </div>
+
+                        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
+                                <span style="font-size:13px;color:var(--gray-400);">Total Contract Value</span>
+                                <span style="font-size:24px;font-weight:800;color:var(--accent-green);" id="bTotalContract">RM 9.5M</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06);">
+                                <span style="font-size:13px;color:var(--gray-400);">Setup Fee (Year 1)</span>
+                                <span style="font-size:18px;font-weight:700;color:var(--white);">RM 500K</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06);">
+                                <span style="font-size:13px;color:var(--gray-400);">Annual License Fee</span>
+                                <span style="font-size:18px;font-weight:700;color:var(--white);" id="bAnnualFee">RM 3.0M/yr</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- What Bursa gets -->
+                    <div style="background:var(--white);border-radius:16px;padding:28px;border:1px solid var(--gray-200);">
+                        <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;">What Bursa Gets</h3>
+                        <p style="font-size:12px;color:var(--gray-400);margin-bottom:16px;">Unlimited access for all investors under one wholesale license</p>
+                        <div style="display:flex;flex-direction:column;gap:10px;">
+                            <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--gray-50);border-radius:10px;font-size:13px;">
+                                <span style="color:var(--accent-green);font-weight:700;">&#10003;</span> Unlimited AI reports for all 2M+ active investors
+                            </div>
+                            <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--gray-50);border-radius:10px;font-size:13px;">
+                                <span style="color:var(--accent-green);font-weight:700;">&#10003;</span> All 63+ report types &amp; dashboard templates
+                            </div>
+                            <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--gray-50);border-radius:10px;font-size:13px;">
+                                <span style="color:var(--accent-green);font-weight:700;">&#10003;</span> Bursa-branded white-label experience
+                            </div>
+                            <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--gray-50);border-radius:10px;font-size:13px;">
+                                <span style="color:var(--accent-green);font-weight:700;">&#10003;</span> Continuous product updates &amp; new features
+                            </div>
+                            <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--gray-50);border-radius:10px;font-size:13px;">
+                                <span style="color:var(--accent-green);font-weight:700;">&#10003;</span> Dedicated Mesiniaga support &amp; SLA
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Why Scenario B works -->
+                <div class="fade-in visible">
+                    <div style="background:var(--white);border-radius:16px;padding:32px;border:1px solid var(--gray-200);margin-bottom:24px;">
+                        <h3 style="font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+                            <span style="width:32px;height:32px;border-radius:8px;background:rgba(249,112,102,0.1);display:inline-flex;align-items:center;justify-content:center;font-size:16px;">&#128161;</span>
+                            Why Scenario B Works for Bursa
+                        </h3>
+                        <div style="display:flex;flex-direction:column;gap:14px;">
+                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
+                                <span style="font-size:20px;flex-shrink:0;">&#128176;</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Predictable Cost, Unlimited Scale</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">One fixed annual fee regardless of how many investors use it. The more investors who access SuperCFO reports, the lower the effective cost per user.</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
+                                <span style="font-size:20px;flex-shrink:0;">&#128274;</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Full Security &amp; Key Control</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Bursa retains full control of API keys, access management, and data governance. Mesiniaga manages infrastructure and security. No data exposure risk.</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
+                                <span style="font-size:20px;flex-shrink:0;">&#127891;</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Free-to-Investor = Maximum Adoption</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">With wholesale licensing, Bursa can offer SuperCFO reports free to all investors &mdash; maximising adoption, education impact, and investor engagement.</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:start;gap:12px;padding:14px 16px;background:var(--gray-50);border-radius:10px;">
+                                <span style="font-size:20px;flex-shrink:0;">&#128200;</span>
+                                <div>
+                                    <div style="font-size:14px;font-weight:600;margin-bottom:2px;">Increased Trading Volume</div>
+                                    <div style="font-size:13px;color:var(--gray-500);line-height:1.5;">Free access to analysis tools drives higher trading activity across the investor base. The increased trading fees can more than offset the license cost.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cost per investor -->
+                    <div style="background:linear-gradient(135deg,rgba(16,185,129,0.06),rgba(99,102,241,0.06));border-radius:16px;padding:24px;border:1px solid rgba(16,185,129,0.15);">
+                        <h4 style="font-size:14px;font-weight:700;margin-bottom:14px;">&#128202; Effective Cost Analysis</h4>
+                        <div style="font-size:13px;color:var(--gray-500);line-height:2;">
+                            <div style="display:flex;justify-content:space-between;"><span>Active Bursa Investors</span><span style="color:var(--navy-dark);font-weight:700;">2,000,000+</span></div>
+                            <div style="display:flex;justify-content:space-between;"><span>Annual License Fee</span><span style="color:var(--navy-dark);font-weight:700;" id="bCostLicense">RM 3.0M</span></div>
+                            <div style="display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);padding-top:8px;margin-top:8px;"><span style="font-weight:700;color:var(--navy-dark);">Effective Cost Per Investor</span><span style="color:var(--accent-green);font-weight:800;font-size:15px;" id="bCostPerInvestor">RM 1.50/yr</span></div>
+                        </div>
+                        <p style="font-size:11px;color:var(--gray-500);margin-top:12px;line-height:1.5;">At just RM 1.50 per investor per year, the wholesale model makes AI-powered financial education accessible to every Malaysian investor.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shared: Security & Control -->
+            <div style="margin-top:48px;background:var(--navy-dark);border-radius:16px;padding:32px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;" class="fade-in">
+                <div style="text-align:center;padding:20px;">
+                    <div style="font-size:28px;margin-bottom:8px;">&#128274;</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Bursa Controls the Keys</div>
+                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">Full ownership of API keys, access management, and data governance. Bursa maintains security and compliance at all times.</div>
+                </div>
+                <div style="text-align:center;padding:20px;">
+                    <div style="font-size:28px;margin-bottom:8px;">&#128187;</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Mesiniaga: Infrastructure</div>
+                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">Enterprise-grade hosting, security hardening, platform integration, SLA management, and ongoing infrastructure support.</div>
+                </div>
+                <div style="text-align:center;padding:20px;">
+                    <div style="font-size:28px;margin-bottom:8px;">&#129302;</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">SuperCFO: Product Innovation</div>
+                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">AI report engine, financial models, new report types, dashboard UX, and continuous product improvement and feature releases.</div>
                 </div>
             </div>
         </div>
@@ -1587,18 +1723,18 @@
             <div style="margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
                 <div style="text-align:center;padding:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;" class="fade-in">
                     <div style="font-size:28px;margin-bottom:8px;">&#128187;</div>
-                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Mesiniaga Handles</div>
-                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">System integration with Bursa platform, enterprise SLA, compliance, support escalation, and account management.</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Mesiniaga: Infrastructure &amp; Security</div>
+                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">Enterprise-grade hosting, security hardening, platform integration with Bursa systems, SLA management, compliance, and ongoing infrastructure support.</div>
                 </div>
                 <div style="text-align:center;padding:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;" class="fade-in">
                     <div style="font-size:28px;margin-bottom:8px;">&#129302;</div>
-                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">SuperCFO Handles</div>
-                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">AI report engine, financial data processing, report generation, dashboard UX, and continuous product improvement.</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">SuperCFO: Product Innovation</div>
+                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">AI report engine, financial models, new report types, dashboard UX, natural language Q&amp;A, and continuous product improvement and feature releases.</div>
                 </div>
                 <div style="text-align:center;padding:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;" class="fade-in">
-                    <div style="font-size:28px;margin-bottom:8px;">&#128200;</div>
-                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Bursa Malaysia Gets</div>
-                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">Revenue share on every report sold, enhanced investor education, increased market participation, and zero operational overhead.</div>
+                    <div style="font-size:28px;margin-bottom:8px;">&#128274;</div>
+                    <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px;">Bursa: Security &amp; Key Control</div>
+                    <div style="font-size:13px;color:var(--gray-400);line-height:1.6;">Full ownership of API keys, access management, data governance, and investor authentication. Bursa maintains security and compliance at all times.</div>
                 </div>
             </div>
         </div>
@@ -1731,7 +1867,34 @@
             }, { passive: true });
         })();
 
-        // Bursa Revenue Simulator
+        // Scenario Tab Switching
+        function switchScenario(s) {
+            const a = document.getElementById('scenarioA');
+            const b = document.getElementById('scenarioB');
+            const tabA = document.getElementById('tabA');
+            const tabB = document.getElementById('tabB');
+            if (s === 'A') {
+                a.style.display = 'grid';
+                b.style.display = 'none';
+                tabA.style.background = 'var(--coral)';
+                tabA.style.color = 'white';
+                tabA.style.borderColor = 'var(--coral)';
+                tabB.style.background = 'var(--white)';
+                tabB.style.color = '#475569';
+                tabB.style.borderColor = '#cbd5e1';
+            } else {
+                a.style.display = 'none';
+                b.style.display = 'grid';
+                tabB.style.background = 'var(--coral)';
+                tabB.style.color = 'white';
+                tabB.style.borderColor = 'var(--coral)';
+                tabA.style.background = 'var(--white)';
+                tabA.style.color = '#475569';
+                tabA.style.borderColor = '#cbd5e1';
+            }
+        }
+
+        // Revenue Simulator
         function fmtRM(v) {
             if (v >= 1e9) return 'RM ' + (v/1e9).toFixed(2) + 'B';
             if (v >= 1e6) return 'RM ' + (v/1e6).toFixed(1) + 'M';
@@ -1739,26 +1902,55 @@
             return 'RM ' + v.toFixed(0);
         }
 
-        function updateBursa() {
-            const reports = +document.getElementById('bursaReports').value;
-            const price = +document.getElementById('bursaPrice').value;
-            const annual = reports * price;
-            const monthly = annual / 12;
-            const bursaCut = annual * 0.3;
-            const partnerCut = annual * 0.7;
+        const ACTIVE_INVESTORS = 2000000;
 
-            document.getElementById('bursaReportsVal').textContent = reports.toLocaleString();
-            document.getElementById('bursaPriceVal').textContent = 'RM ' + price;
-            document.getElementById('bursaAnnualRev').textContent = fmtRM(annual);
-            document.getElementById('bursaMonthlyRev').textContent = fmtRM(monthly);
-            document.getElementById('bursaShare').textContent = fmtRM(bursaCut) + '/yr';
-            document.getElementById('partnerShare').textContent = fmtRM(partnerCut) + '/yr';
+        // Scenario A: Setup + % of subscription sales
+        function updateScenarioA() {
+            const rate = +document.getElementById('subRate').value;
+            const price = +document.getElementById('subPrice').value;
+            const pct = +document.getElementById('bursaPct').value;
+            const subs = Math.round(ACTIVE_INVESTORS * rate / 100);
+            const annual = subs * price * 12;
+            const bursaCut = annual * pct / 100;
+            const partnerCut = annual - bursaCut;
+
+            document.getElementById('subRateVal').textContent = rate + '% (' + subs.toLocaleString() + ' subscribers)';
+            document.getElementById('subPriceVal').textContent = 'RM ' + price + '/mo';
+            document.getElementById('bursaPctVal').textContent = pct + '%';
+            document.getElementById('aAnnualRev').textContent = fmtRM(annual);
+            document.getElementById('aBursaShare').textContent = fmtRM(bursaCut);
+            document.getElementById('aPartnerShare').textContent = fmtRM(partnerCut);
+            document.getElementById('aBarBursa').style.width = pct + '%';
+            document.getElementById('aBarPartner').style.width = (100 - pct) + '%';
+            document.getElementById('aBarBursaLabel').textContent = 'Bursa ' + pct + '%';
+            document.getElementById('aBarPartnerLabel').textContent = 'Mesiniaga + SuperCFO ' + (100 - pct) + '%';
         }
 
-        ['bursaReports','bursaPrice'].forEach(id => {
-            document.getElementById(id).addEventListener('input', updateBursa);
+        ['subRate','subPrice','bursaPct'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateScenarioA);
         });
-        updateBursa();
+        updateScenarioA();
+
+        // Scenario B: Setup + wholesale license
+        function updateScenarioB() {
+            const license = +document.getElementById('bLicense').value;
+            const term = +document.getElementById('bTerm').value;
+            const setup = 500000;
+            const total = setup + (license * term);
+            const costPerInvestor = license / ACTIVE_INVESTORS;
+
+            document.getElementById('bLicenseVal').textContent = fmtRM(license) + '/yr';
+            document.getElementById('bTermVal').textContent = term + (term === 1 ? ' year' : ' years');
+            document.getElementById('bTotalContract').textContent = fmtRM(total);
+            document.getElementById('bAnnualFee').textContent = fmtRM(license) + '/yr';
+            document.getElementById('bCostLicense').textContent = fmtRM(license);
+            document.getElementById('bCostPerInvestor').textContent = 'RM ' + costPerInvestor.toFixed(2) + '/yr';
+        }
+
+        ['bLicense','bTerm'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updateScenarioB);
+        });
+        updateScenarioB();
 
         // Mobile menu
         function toggleMobile() {
